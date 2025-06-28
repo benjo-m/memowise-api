@@ -1,6 +1,6 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: %i[ show update destroy ]
-  before_action :set_user, only: %i[ index ]
+  before_action :set_user
+  before_action :set_deck, :authorize_user, only: %i[ show update destroy ]
 
   # GET /decks
   def index
@@ -14,7 +14,7 @@ class DecksController < ApplicationController
 
   # POST /decks
   def create
-    @deck = Deck.new(deck_params)
+    @deck = @user.decks.create(deck_params)
 
     if @deck.save
       render json: @deck, status: :created, location: @deck
@@ -44,11 +44,15 @@ class DecksController < ApplicationController
     end
 
     def set_user
-      @user = User.find(params.expect(:user_id))
+      @user = User.find(rodauth.session[:account_id])
+    end
+
+    def authorize_user
+      render status: :unauthorized if @deck.user != @user
     end
 
     # Only allow a list of trusted parameters through.
     def deck_params
-      params.expect(deck: [ :name, :user_id ])
+      params.expect(deck: [ :name ])
     end
 end
