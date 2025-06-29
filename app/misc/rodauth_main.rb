@@ -131,12 +131,14 @@ class RodauthMain < Rodauth::Rails::Auth
         login = db[:users].where(username: login).get(:email)
       end
 
-    super(login)
-  end
+      super(login)
+    end
+
     # Perform additional actions after the account is created.
-    # after_create_account do
-    #   Profile.create!(account_id: account_id, name: param("name"))
-    # end
+    after_create_account do
+      # Profile.create!(account_id: account_id, name: param("name"))
+      User.find(account_id).update(status: 2)
+    end
 
     # Do additional cleanup after the account is closed.
     # after_close_account do
