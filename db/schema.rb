@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_202043) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_01_183546) do
   create_table "decks", force: :cascade do |t|
     t.string "name", null: false
     t.integer "user_id", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_202043) do
     t.string "password_hash"
     t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true, where: "status IN (1, 2)"
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "decks", "users"
