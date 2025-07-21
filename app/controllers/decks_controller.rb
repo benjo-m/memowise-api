@@ -4,7 +4,7 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: @user.decks
+    render json: @user.decks.order(created_at: :desc)
   end
 
   # GET /decks/1
