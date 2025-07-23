@@ -9,7 +9,7 @@ class DecksController < ApplicationController
 
   # GET /decks/1
   def show
-    render json: @deck
+    render json: @deck, include: :flashcards
   end
 
   # POST /decks
@@ -38,9 +38,8 @@ class DecksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_deck
-      @deck = Deck.find(params.expect(:id))
+      @deck = Deck.includes(:flashcards).find(params.expect(:id))
     end
 
     def set_user
@@ -51,8 +50,7 @@ class DecksController < ApplicationController
       render status: :unauthorized if @deck.user != @user
     end
 
-    # Only allow a list of trusted parameters through.
     def deck_params
-      params.expect(deck: [ :name ])
+      params.expect(deck: [ :name, :place, flashcards_attributes: [ [ :front, :back ] ] ])
     end
 end
