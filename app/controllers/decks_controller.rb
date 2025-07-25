@@ -4,7 +4,7 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: @user.decks.order(created_at: :desc)
+    render json: @user.decks.order(created_at: :desc), include: :flashcards
   end
 
   # GET /decks/1
@@ -17,7 +17,7 @@ class DecksController < ApplicationController
     @deck = @user.decks.create(deck_params)
 
     if @deck.save
-      render json: @deck, status: :created, location: @deck
+      render json: @deck, include: :flashcards, status: :created, location: @deck
     else
       render json: @deck.errors, status: :unprocessable_entity
     end
@@ -34,6 +34,7 @@ class DecksController < ApplicationController
 
   # DELETE /decks/1
   def destroy
+    puts @deck
     @deck.destroy!
   end
 
