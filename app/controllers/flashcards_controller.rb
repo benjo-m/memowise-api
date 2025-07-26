@@ -10,7 +10,7 @@ class FlashcardsController < ApplicationController
 
   # GET /flashcards/1
   def show
-    render json: @flashcard
+    render json: @flashcard, methods: [ :front_image_url, :back_image_url ]
   end
 
   # POST /flashcards
@@ -18,7 +18,7 @@ class FlashcardsController < ApplicationController
     @flashcard = Flashcard.new(flashcard_params)
 
     if @flashcard.save
-      render json: @flashcard, status: :created, location: @flashcard
+      render json: @flashcard, methods: [ :front_image_url, :back_image_url ], status: :created, location: @flashcard
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
@@ -46,6 +46,6 @@ class FlashcardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def flashcard_params
-      params.expect(flashcard: [ :front, :back, :deck_id ])
+      params.expect(flashcard: [ :front, :back, :deck_id, :front_image, :back_image ])
     end
 end

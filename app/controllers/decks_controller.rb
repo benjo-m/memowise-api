@@ -4,7 +4,7 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: @user.decks.order(created_at: :desc), include: :flashcards
+    render json: @user.decks.order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
   end
 
   # GET /decks/1
@@ -52,6 +52,6 @@ class DecksController < ApplicationController
     end
 
     def deck_params
-      params.expect(deck: [ :name, :place, flashcards_attributes: [ [ :front, :back ] ] ])
+      params.expect(deck: [ :name, :place, flashcards_attributes: [ [ :front, :back, :front_image, :back_image ] ] ])
     end
 end
