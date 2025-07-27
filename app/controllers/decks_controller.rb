@@ -9,7 +9,7 @@ class DecksController < ApplicationController
 
   # GET /decks/1
   def show
-    render json: @deck, include: :flashcards
+    render json: @deck, include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
   end
 
   # POST /decks
@@ -17,7 +17,7 @@ class DecksController < ApplicationController
     @deck = @user.decks.create(deck_params)
 
     if @deck.save
-      render json: @deck, include: :flashcards, status: :created, location: @deck
+      render json: @deck, include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }, status: :created, location: @deck
     else
       render json: @deck.errors, status: :unprocessable_entity
     end

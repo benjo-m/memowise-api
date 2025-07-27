@@ -27,7 +27,7 @@ class FlashcardsController < ApplicationController
   # PATCH/PUT /flashcards/1
   def update
     if @flashcard.update(flashcard_params)
-      render json: @flashcard
+      render json: @flashcard, methods: [ :front_image_url, :back_image_url ]
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
