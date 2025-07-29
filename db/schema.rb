@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_26_101344) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_29_153912) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,6 +53,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_26_101344) do
     t.integer "deck_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "repetitions", default: 0
+    t.float "ease_factor", default: 2.5
+    t.integer "interval", default: 0
+    t.date "due_date"
     t.index ["deck_id"], name: "index_flashcards_on_deck_id"
   end
 
