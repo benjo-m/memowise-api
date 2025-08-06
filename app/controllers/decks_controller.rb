@@ -26,7 +26,7 @@ class DecksController < ApplicationController
   # PATCH/PUT /decks/1
   def update
     if @deck.update(deck_params)
-      render json: @deck
+      render json: @deck, include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
     else
       render json: @deck.errors, status: :unprocessable_entity
     end
