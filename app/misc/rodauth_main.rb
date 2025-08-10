@@ -121,19 +121,19 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # ==> Hooks
     # Validate custom fields in the create account form.
-    before_create_account do
-      throw_error_status(422, "username", "must be present") if param("username").empty?
-      throw_error_status(422, "username", "already taken") if User.where(username: param("username")).any?
-      account[:username] = param("username")
-    end
+    # before_create_account do
+    #   throw_error_status(422, "username", "must be present") if param("username").empty?
+    #   throw_error_status(422, "username", "already taken") if User.where(username: param("username")).any?
+    #   account[:username] = param("username")
+    # end
 
-    account_from_login do |login|
-      unless login.include?("@")
-        login = db[:users].where(username: login).get(:email)
-      end
+    # account_from_login do |login|
+    #   unless login.include?("@")
+    #     login = db[:users].where(username: login).get(:email)
+    #   end
 
-      super(login)
-    end
+    #   super(login)
+    # end
 
     # Perform additional actions after the account is created.
     after_create_account do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_29_153912) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_10_141812) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,6 +60,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_153912) do
     t.index ["deck_id"], name: "index_flashcards_on_deck_id"
   end
 
+  create_table "study_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "deck_id", null: false
+    t.integer "duration"
+    t.integer "correct_answers"
+    t.integer "incorrect_answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deck_id"], name: "index_study_sessions_on_deck_id"
+    t.index ["user_id"], name: "index_study_sessions_on_user_id"
+  end
+
   create_table "user_login_change_keys", force: :cascade do |t|
     t.string "key", null: false
     t.string "login", null: false
@@ -91,6 +103,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_153912) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "decks", "users"
   add_foreign_key "flashcards", "decks"
+  add_foreign_key "study_sessions", "decks"
+  add_foreign_key "study_sessions", "users"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_verification_keys", "users", column: "id"

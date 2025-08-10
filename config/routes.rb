@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :users
   resources :decks
   resources :flashcards
 
   patch "/flashcards/:id/stats", to: "flashcards#update_stats"
+  get "/users/stats", to: "users#get_stats"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
