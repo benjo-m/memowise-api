@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       total_time_spent_studying: total_duration,
       average_session_duration: total_sessions > 0 ? (total_duration / total_sessions) : 0,
       study_sessions_by_part_of_day: study_sessions_by_part_of_day(study_sessions),
-      study_sessions_by_weekday: study_sessions_by_weekday(study_sessions),
+      study_sessions_by_day: study_sessions_by_day(study_sessions),
       average_flashcards_reviewed_per_session: total_sessions > 0 ? (total_flashcards / total_sessions) : 0,
       total_correct_answers: total_correct,
       total_incorrect_answers: total_incorrect,
@@ -68,12 +68,12 @@ class UsersController < ApplicationController
     parts_of_day
   end
 
-  def study_sessions_by_weekday(study_sessions)
+  def study_sessions_by_day(study_sessions)
     counts = Date::DAYNAMES.each_with_object({}) { |day, hash| hash[day] = 0 }
 
     study_sessions.each do |session|
-      weekday = Date::DAYNAMES[session.created_at.wday]
-      counts[weekday] += 1
+      day = Date::DAYNAMES[session.created_at.wday]
+      counts[day] += 1
     end
 
     counts
