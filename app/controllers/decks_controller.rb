@@ -4,7 +4,7 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: @user.decks.order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
+    render json: @user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
   end
 
   # GET /decks/1
@@ -34,8 +34,7 @@ class DecksController < ApplicationController
 
   # DELETE /decks/1
   def destroy
-    puts @deck
-    @deck.destroy!
+    @deck.update_attribute!(:deleted, true)
   end
 
   private

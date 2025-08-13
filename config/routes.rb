@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :decks
   resources :flashcards
-
+  resources :study_sessions, only: [ :create ]
   patch "/flashcards/:id/stats", to: "flashcards#update_stats"
   get "/users/stats", to: "users#get_stats"
 
