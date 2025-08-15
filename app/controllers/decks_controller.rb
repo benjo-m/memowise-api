@@ -1,10 +1,9 @@
 class DecksController < ApplicationController
-  before_action :set_user
   before_action :set_deck, :authorize_user, only: %i[ show update destroy ]
 
   # GET /decks
   def index
-    render json: @user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url, :due_today ] } }
+    render json: current_user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url, :due_today ] } }
   end
 
   # GET /decks/1
@@ -14,7 +13,7 @@ class DecksController < ApplicationController
 
   # POST /decks
   def create
-    @deck = @user.decks.create(deck_params)
+    @deck = current_user.decks.create(deck_params)
 
     if @deck.save
       render json: @deck, include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }, status: :created, location: @deck
@@ -42,12 +41,8 @@ class DecksController < ApplicationController
       @deck = Deck.includes(:flashcards).find(params.expect(:id))
     end
 
-    def set_user
-      @user = User.find(rodauth.session[:account_id])
-    end
-
     def authorize_user
-      render status: :unauthorized if @deck.user != @user
+      render status: :unauthorized if @deck.user != current_user
     end
 
     def deck_params

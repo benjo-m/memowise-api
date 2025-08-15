@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user
-
   def get_stats
-    study_sessions = @user.study_sessions
+    study_sessions = current_user.study_sessions
 
     total_sessions = study_sessions.size
     total_duration = study_sessions.sum(&:duration)
@@ -32,10 +30,6 @@ class UsersController < ApplicationController
   end
 
   private
-  def set_user
-    @user = User.find(rodauth.session[:account_id])
-  end
-
   def study_sessions_by_part_of_day(study_sessions)
     time_ranges = {
       morning: 6...12,
