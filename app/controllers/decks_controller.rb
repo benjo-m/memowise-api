@@ -4,7 +4,7 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: @user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url ] } }
+    render json: @user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url, :due_today ] } }
   end
 
   # GET /decks/1

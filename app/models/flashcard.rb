@@ -15,6 +15,10 @@ class Flashcard < ApplicationRecord
     self.due_date = Date.today
   end
 
+  def due_today
+    self.due_date <= Date.today
+  end
+
   def front_image_url
     Rails.application.routes.url_helpers.rails_blob_path(front_image.variant(:resized), only_path: true) if front_image.attached?
   end

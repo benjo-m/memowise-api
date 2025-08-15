@@ -4,18 +4,18 @@ class FlashcardsController < ApplicationController
   def index
     @flashcards = Flashcard.all
 
-    render json: @flashcards
+    render json: @flashcards, methods: [ :due_today ]
   end
 
   def show
-    render json: @flashcard, methods: [ :front_image_url, :back_image_url ]
+    render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ]
   end
 
   def create
     @flashcard = Flashcard.new(flashcard_params)
 
     if @flashcard.save
-      render json: @flashcard, methods: [ :front_image_url, :back_image_url ], status: :created, location: @flashcard
+      render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ], status: :created, location: @flashcard
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
