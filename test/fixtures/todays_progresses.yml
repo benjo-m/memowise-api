@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  flashcards_due_today_count: 1
+  flashcards_reviewed_today_count: 1
+  progress_date: 2025-08-16
+
+two:
+  user: two
+  flashcards_due_today_count: 1
+  flashcards_reviewed_today_count: 1
+  progress_date: 2025-08-16

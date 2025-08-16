@@ -138,7 +138,9 @@ class RodauthMain < Rodauth::Rails::Auth
     # Perform additional actions after the account is created.
     after_create_account do
       # Profile.create!(account_id: account_id, name: param("name"))
-      User.find(account_id).update(status: 2)
+      user = User.find(account_id)
+      user.update(status: 2)
+      user.create_todays_progress(progress_date: Date.today)
     end
 
     # Do additional cleanup after the account is closed.
