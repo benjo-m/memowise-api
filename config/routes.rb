@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   resources :decks
-  resources :flashcards
   resources :study_sessions, only: [ :create ]
-  patch "/flashcards/:id/stats", to: "flashcards#update_stats"
+  patch "/flashcards/batch-update", to: "flashcards#batch_update_flashcards_stats"
+  resources :flashcards
   get "/users/stats", to: "users#get_stats"
+  get "/users/todays-progress", to: "users#get_todays_progress"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

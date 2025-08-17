@@ -1,5 +1,5 @@
 class FlashcardsController < ApplicationController
-  before_action :set_flashcard, only: %i[ show update update_stats destroy ]
+  before_action :set_flashcard, only: %i[ show update destroy ]
 
   def index
     @flashcards = Flashcard.all
@@ -32,11 +32,9 @@ class FlashcardsController < ApplicationController
     end
   end
 
-  def update_stats
-    if @flashcard.update(flashcard_stats_params)
-      render json: @flashcard
-    else
-      render json: @flashcard.errors, status: :unprocessable_entity
+  def batch_update_flashcards_stats
+    flashcards_to_update.each do |flashcard|
+      Flashcard.find(flashcard[:id]).update(flashcard.except(:id))
     end
   end
 
@@ -53,7 +51,7 @@ class FlashcardsController < ApplicationController
       params.expect(flashcard: [ :front, :back, :deck_id, :front_image, :back_image, :remove_front_image, :remove_back_image ])
     end
 
-    def flashcard_stats_params
-      params.expect(flashcard: [ :repetitions, :interval, :ease_factor, :due_date ])
+    def flashcards_to_update
+      params.expect(flashcards: [ [ :id, :repetitions, :interval, :ease_factor, :due_date ] ])
     end
 end
