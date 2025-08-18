@@ -29,6 +29,10 @@ class UsersController < ApplicationController
     render json: stats
   end
 
+  def get_todays_progress
+    render json: current_user.todays_progress
+  end
+
   private
   def study_sessions_by_part_of_day(study_sessions)
     time_ranges = {

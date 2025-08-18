@@ -3,7 +3,15 @@ class DecksController < ApplicationController
 
   # GET /decks
   def index
-    render json: current_user.decks.where(deleted: false).order(created_at: :desc), include: { flashcards: { methods: [ :front_image_url, :back_image_url, :due_today ] } }
+    decks = current_user.decks.where(deleted: false).order(created_at: :desc)
+
+    if current_user.todays_progress.progress_date < Date.today
+      count = 0
+      decks.each { |d| d.flashcards.each { |fc| count += 1 if fc.due_today } }
+      current_user.todays_progress.update(flashcards_due_today_count: count, flashcards_reviewed_today_count: 0, progress_date: Date.today)
+    end
+
+    render json: decks, include: { flashcards: { methods: [ :front_image_url, :back_image_url, :due_today ] } }
   end
 
   # GET /decks/1
@@ -34,6 +42,10 @@ class DecksController < ApplicationController
   # DELETE /decks/1
   def destroy
     @deck.update_attribute!(:deleted, true)
+    to_subtract = @deck.flashcards.count { |fc| fc.due_today }
+    current_count = current_user.todays_progress.flashcards_due_today_count
+    current_user.todays_progress.update(flashcards_due_today_count: current_count - to_subtract)
+    render json: @deck, include: { flashcards: { methods: [ :due_today ] } }
   end
 
   private
