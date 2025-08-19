@@ -139,7 +139,7 @@ class RodauthMain < Rodauth::Rails::Auth
     after_create_account do
       # Profile.create!(account_id: account_id, name: param("name"))
       user = User.find(account_id)
-      user.update(status: 2)
+      # user.update(status: 2)
       user.create_todays_progress(progress_date: Date.today)
     end
 
