@@ -153,5 +153,20 @@ class RodauthMain < Rodauth::Rails::Auth
     # verify_account_grace_period 3.days.to_i
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
+    invalid_previous_password_message do
+      "Wrong password"
+    end
+
+    password_does_not_meet_requirements_message do
+      "Password must be 8 to 72 characters long"
+    end
+
+    same_as_existing_password_message do
+      "New password can't be the same as the current password"
+    end
+
+    passwords_do_not_match_message do
+      "Passwords do not match"
+    end
   end
 end
