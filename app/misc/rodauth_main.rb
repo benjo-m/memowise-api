@@ -100,7 +100,8 @@ class RodauthMain < Rodauth::Rails::Auth
     # no_matching_login_message "user with this email address doesn't exist"
     # already_an_account_with_this_login_message "user with this email address already exists"
     # password_too_short_message { "needs to have at least #{password_minimum_length} characters" }
-    # login_does_not_meet_requirements_message { "invalid email#{", #{login_requirement_message}" if login_requirement_message}" }
+    already_an_account_with_this_login_message { "an account with this email address already exists" }
+    login_does_not_meet_requirements_message { "Email invalid#{", #{login_requirement_message}" if login_requirement_message}" }
 
     # Passwords shorter than 8 characters are considered weak according to OWASP.
     password_minimum_length 8
