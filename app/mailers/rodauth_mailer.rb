@@ -1,5 +1,5 @@
 class RodauthMailer < ApplicationMailer
-  default to: -> { @rodauth.email_to }, from: email_address_with_name(Rails.application.credentials.email!, "MemoWise")
+  default to: -> { @rodauth.email_to }, from: email_address_with_name(Rails.application.credentials.memowise_email!, "MemoWise")
 
   def verify_account(name, account_id, key)
     @rodauth = rodauth(name, account_id) { @verify_account_key_value = key }

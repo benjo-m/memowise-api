@@ -249,7 +249,7 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.1)
       io-console (~> 0.5)
-    roda (3.93.0)
+    roda (3.95.0)
       rack
     rodauth (2.39.0)
       roda (>= 2.6.0)
