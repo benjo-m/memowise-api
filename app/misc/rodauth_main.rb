@@ -102,6 +102,11 @@ class RodauthMain < Rodauth::Rails::Auth
     # password_too_short_message { "needs to have at least #{password_minimum_length} characters" }
     already_an_account_with_this_login_message { "an account with this email address already exists" }
     login_does_not_meet_requirements_message { "Email invalid#{", #{login_requirement_message}" if login_requirement_message}" }
+    invalid_previous_password_message { "Wrong password" }
+    password_does_not_meet_requirements_message { "Password must be at least 8 characters long" }
+    same_as_existing_password_message { "New password can't be the same as the current password" }
+    passwords_do_not_match_message { "Passwords do not match" }
+    no_matching_login_message { "The email address you entered is invalid or an account doesn't exist" }
 
     # Passwords shorter than 8 characters are considered weak according to OWASP.
     password_minimum_length 8
@@ -154,21 +159,5 @@ class RodauthMain < Rodauth::Rails::Auth
     # verify_account_grace_period 3.days.to_i
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
-
-    invalid_previous_password_message do
-      "Wrong password"
-    end
-
-    password_does_not_meet_requirements_message do
-      "Password must be 8 to 72 characters long"
-    end
-
-    same_as_existing_password_message do
-      "New password can't be the same as the current password"
-    end
-
-    passwords_do_not_match_message do
-      "Passwords do not match"
-    end
   end
 end
