@@ -337,7 +337,7 @@ GEM
     thruster (0.1.14-arm64-darwin)
     thruster (0.1.14-x86_64-darwin)
     thruster (0.1.14-x86_64-linux)
-    tilt (2.6.0)
+    tilt (2.6.1)
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -383,7 +383,7 @@ DEPENDENCIES
   solid_queue
   sqlite3 (>= 2.1)
   thruster
-  tilt (~> 2.4)
+  tilt (~> 2.6)
   tzinfo-data
 
 BUNDLED WITH
