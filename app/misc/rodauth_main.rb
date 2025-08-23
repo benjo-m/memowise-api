@@ -156,7 +156,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # ==> Deadlines
     # Change default deadlines for some actions.
-    # verify_account_grace_period 3.days.to_i
+    verify_account_grace_period 0
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
   end
