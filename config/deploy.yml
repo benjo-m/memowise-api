@@ -2,7 +2,7 @@
 service: memowise_api
 
 # Name of the container image.
-image: freycortez/memowise-api
+image: freycortez/memowise_api
 
 # Deploy to these servers.
 servers:
