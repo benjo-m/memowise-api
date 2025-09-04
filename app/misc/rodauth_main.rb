@@ -102,6 +102,7 @@ class RodauthMain < Rodauth::Rails::Auth
     # password_too_short_message { "needs to have at least #{password_minimum_length} characters" }
     already_an_account_with_this_login_message { "an account with this email address already exists" }
     login_does_not_meet_requirements_message { "Email invalid#{", #{login_requirement_message}" if login_requirement_message}" }
+    invalid_password_message { "Wrong password" }
     invalid_previous_password_message { "Wrong password" }
     password_does_not_meet_requirements_message { "Password must be at least 8 characters long" }
     same_as_existing_password_message { "New password can't be the same as the current password" }
