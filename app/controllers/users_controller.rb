@@ -23,7 +23,8 @@ class UsersController < ApplicationController
       average_flashcards_reviewed_per_session: total_sessions > 0 ? (total_flashcards / total_sessions) : 0,
       total_correct_answers: total_correct,
       total_incorrect_answers: total_incorrect,
-      favorite_deck: favorite_deck_name ? { deck: favorite_deck_name, count: most_frequent_deck_count } : nil
+      favorite_deck: favorite_deck_name ? { deck: favorite_deck_name, count: most_frequent_deck_count } : nil,
+      flashcards_reviewed_by_day: flashcards_reviewed_by_day(study_sessions)
     }
 
     render json: stats
@@ -121,5 +122,14 @@ class UsersController < ApplicationController
     end
 
     [ best_streak, current_streak ].max
+  end
+
+  def flashcards_reviewed_by_day(study_sessions)
+    last_7_days = (0..6).map { |i| Date.today - i }.reverse
+
+    last_7_days.map do |day|
+      count = study_sessions.where(created_at: day.beginning_of_day..day.end_of_day).sum { |s| s.correct_answers + s.incorrect_answers }
+    { date: day.strftime("%Y-%m-%d"), count: count }
+    end
   end
 end
