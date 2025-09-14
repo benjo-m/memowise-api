@@ -28,7 +28,7 @@ class FlashcardsController < ApplicationController
     @flashcard.back_image.purge if @flashcard.back_image.attached? && flashcard_params[:remove_back_image] == "true"
 
     if @flashcard.update(flashcard_params.except(:remove_front_image, :remove_back_image))
-      render json: @flashcard, methods: [ :front_image_url, :back_image_url ]
+      render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ]
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
