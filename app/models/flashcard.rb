@@ -1,15 +1,8 @@
 class Flashcard < ApplicationRecord
   before_validation :set_default_due_date, on: :create
-
   belongs_to :deck
-
-  has_one_attached :front_image do |attachable|
-    attachable.variant :resized, resize_to_limit: [ 500, 500 ]
-  end
-
-  has_one_attached :back_image do |attachable|
-    attachable.variant :resized, resize_to_limit: [ 500, 500 ]
-  end
+  has_one_attached(:front_image) { |attachable| attachable.variant :resized, resize_to_limit: [ 500, 500 ] }
+  has_one_attached(:back_image) { |attachable| attachable.variant :resized, resize_to_limit: [ 500, 500 ] }
 
   def set_default_due_date
     self.due_date = Date.today

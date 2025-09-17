@@ -3,7 +3,6 @@ class FlashcardsController < ApplicationController
 
   def index
     @flashcards = Flashcard.all
-
     render json: @flashcards, methods: [ :due_today ]
   end
 
