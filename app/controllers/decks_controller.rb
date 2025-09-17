@@ -27,7 +27,7 @@ class DecksController < ApplicationController
 
   def destroy
     @deck.update_attribute!(:deleted, true)
-    subtract_from_flashcards_due_today_count
+    subtract_from_flashcards_due_today_count(@deck)
     render json: @deck
   end
 
@@ -46,9 +46,8 @@ class DecksController < ApplicationController
       current_user.todays_progress.update(flashcards_due_today_count: count, flashcards_reviewed_today_count: 0, progress_date: Date.today)
     end
 
-    def subtract_from_flashcards_due_today_count
-      to_subtract = @deck.flashcards.count { |fc| fc.due_today }
-      current_count = current_user.todays_progress.flashcards_due_today_count
-      current_user.todays_progress.update(flashcards_due_today_count: current_count - to_subtract)
+    def subtract_from_flashcards_due_today_count(deck)
+      to_subtract = deck.flashcards.count { |fc| fc.due_today }
+      current_user.todays_progress.decrement!(:flashcards_due_today_count, to_subtract)
     end
 end

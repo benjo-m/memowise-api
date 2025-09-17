@@ -19,4 +19,8 @@ class Flashcard < ApplicationRecord
   def back_image_url
     Rails.application.routes.url_helpers.rails_blob_path(back_image.variant(:resized), only_path: true) if back_image.attached?
   end
+
+  def as_json(options = {})
+    super(only: [ :id, :question, :answer ], methods: [ :front_image_url, :back_image_url, :due_today ])
+  end
 end

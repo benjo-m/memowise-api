@@ -1,22 +1,16 @@
 class FlashcardsController < ApplicationController
   before_action :set_flashcard, only: %i[ show update destroy ]
 
-  def index
-    @flashcards = Flashcard.all
-    render json: @flashcards, methods: [ :due_today ]
-  end
-
   def show
-    render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ]
+    render json: @flashcard
   end
 
   def create
     @flashcard = Flashcard.new(flashcard_params)
 
     if @flashcard.save
-      current_count = current_user.todays_progress.flashcards_due_today_count
-      current_user.todays_progress.update(flashcards_due_today_count: current_count + 1)
-      render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ], status: :created, location: @flashcard
+      current_user.todays_progress.increment!(:flashcards_due_today_count)
+      render json: @flashcard, status: :created, location: @flashcard
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
@@ -27,7 +21,7 @@ class FlashcardsController < ApplicationController
     @flashcard.back_image.purge if @flashcard.back_image.attached? && flashcard_params[:remove_back_image] == "true"
 
     if @flashcard.update(flashcard_params.except(:remove_front_image, :remove_back_image))
-      render json: @flashcard, methods: [ :front_image_url, :back_image_url, :due_today ]
+      render json: @flashcard
     else
       render json: @flashcard.errors, status: :unprocessable_entity
     end
@@ -40,11 +34,7 @@ class FlashcardsController < ApplicationController
   end
 
   def destroy
-    if @flashcard.due_today
-      current_count = current_user.todays_progress.flashcards_due_today_count
-      current_user.todays_progress.update(flashcards_due_today_count: current_count - 1)
-    end
-
+    current_user.todays_progress.decrement!(:flashcards_due_today_count) if @flashcard.due_today
     @flashcard.destroy!
   end
 
