@@ -21,6 +21,6 @@ class Flashcard < ApplicationRecord
   end
 
   def as_json(options = {})
-    super(only: [ :id, :front, :back ], methods: [ :front_image_url, :back_image_url, :due_today ])
+    super(only: [ :id, :deck_id, :front, :back ], methods: [ :front_image_url, :back_image_url, :due_today ])
   end
 end

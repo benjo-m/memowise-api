@@ -1,12 +1,8 @@
 class FlashcardsController < ApplicationController
-  before_action :set_flashcard, only: %i[ show update destroy ]
-
-  def show
-    render json: @flashcard
-  end
+  before_action :set_flashcard, only: %i[ update destroy ]
 
   def create
-    @flashcard = Flashcard.new(flashcard_params)
+    @flashcard = current_user.decks.find(flashcard_params[:deck_id]).flashcards.create(flashcard_params)
 
     if @flashcard.save
       current_user.todays_progress.increment!(:flashcards_due_today_count)
