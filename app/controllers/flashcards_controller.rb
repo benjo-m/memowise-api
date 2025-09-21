@@ -36,7 +36,7 @@ class FlashcardsController < ApplicationController
 
   private
     def set_flashcard
-      @flashcard = Flashcard.find(params.expect(:id))
+      @flashcard = current_user.flashcards.find(params.expect(:id))
     end
 
     def flashcard_params
