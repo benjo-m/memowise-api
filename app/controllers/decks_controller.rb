@@ -33,7 +33,7 @@ class DecksController < ApplicationController
 
   private
     def set_deck
-      @deck = current_user.decks.find(params.expect(:id))
+      @deck = current_user.decks.find(params[:id])
     end
 
     def deck_params
